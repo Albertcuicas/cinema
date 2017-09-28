@@ -11,11 +11,7 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
-
-Route::get('home', 'HomeController@index');
-
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);
+Route::get('/','FrontController@index');
+Route::get('contacto','FrontController@contacto');
+Route::get('reviews','FrontController@reviews');
+Route::get('admin','FrontController@admin');
