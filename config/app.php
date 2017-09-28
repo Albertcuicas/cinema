@@ -145,6 +145,12 @@ return [
 		'Cinema\Providers\EventServiceProvider',
 		'Cinema\Providers\RouteServiceProvider',
 
+		/*
+         * Laravel Collective Service Providers...
+         */
+        'Collective\Html\HtmlServiceProvider::class',
+
+
 	],
 
 	/*
@@ -192,6 +198,8 @@ return [
 		'URL'       => 'Illuminate\Support\Facades\URL',
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
+		'Form' 		=> 'Collective\Html\FormFacade::class',
+        'Html' 		=> 'Collective\Html\HtmlFacade::class',
 
 	],
 
