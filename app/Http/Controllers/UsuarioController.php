@@ -4,6 +4,8 @@ use Cinema\Http\Requests;
 use Cinema\Http\Controllers\Controller;
 use Cinema\User;
 use Illuminate\Http\Request;
+use Session;
+use Redirect;
 
 class UsuarioController extends Controller {
 
@@ -72,10 +74,13 @@ class UsuarioController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($id, Request $request)
 	{
 		$user = User::find($id);
-       return view('usuario.edit',['user'=>$user]);
+    	$user->fill($request->all());
+    	$user->save();
+    	Session::flash('message','Usuario actualizado');
+    	return Redirect::to('/usuario');
 	}
 
 	/**
