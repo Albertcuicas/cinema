@@ -1,6 +1,7 @@
 <?php namespace Cinema\Http\Controllers;
 
 use Cinema\Http\Requests;
+use Cinema\Http\Requests\UserCreateRequest;
 use Cinema\Http\Controllers\Controller;
 use Cinema\User;
 use Illuminate\Http\Request;
