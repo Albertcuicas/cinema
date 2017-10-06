@@ -2,6 +2,7 @@
 
 use Cinema\Http\Requests;
 use Cinema\Http\Requests\UserCreateRequest;
+use Cinema\Http\Requests\UserUpdateRequest;
 use Cinema\Http\Controllers\Controller;
 use Cinema\User;
 use Illuminate\Http\Request;
@@ -36,7 +37,7 @@ class UsuarioController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store(Request $request)
+	public function store(UserCreateRequest $request)
 	{
 		User::create([
 			'name' => $request['name'],
@@ -75,7 +76,7 @@ class UsuarioController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id, Request $request)
+	public function update($id, UserUpdateRequest $request)
 	{
 		$user = User::find($id);
     	$user->fill($request->all());
