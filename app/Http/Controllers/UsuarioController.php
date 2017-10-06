@@ -50,7 +50,7 @@ class UsuarioController extends Controller {
 	public function store(UserCreateRequest $request)
 	{
 		User::create($request->all());
-		Session::flash('message','Usuario creado')
+		Session::flash('message','Usuario creado');
 		return Redirect::to('/usuario');
 	}
 
@@ -98,7 +98,7 @@ class UsuarioController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		User::destroy($id);
+		$this->user->delete();
 		Session::flash('message','Usuario eliminado');
 		return Redirect::to('/usuario');
 	}
