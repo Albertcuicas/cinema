@@ -6,10 +6,21 @@ use Illuminate\Http\Request;
 
 use Cinema\Http\Requests;
 use Cinema\Http\Controllers\Controller;
+use Illuminate\Routing\Route;
 use Cinema\Genre;
 
 class GeneroController extends Controller
 {
+
+    public function __construct(){
+        $this->beforeFilter('@find',['only' => ['edit','update','destroy']]);
+    }
+
+    public function find (Route $route){
+        $this->genre = Genre::find($route->getParameter('genero'));
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -49,7 +60,7 @@ class GeneroController extends Controller
     {
         Genre::create($request->all());
         return response()->json([
-            "mensaje" => "creado"
+            "mensaje" => "Elemento creado"
         ]);
     }
 
@@ -72,11 +83,7 @@ class GeneroController extends Controller
      */
     public function edit($id)
     {
-        $genre = Genre::find($id);
-
-        return response()->json(
-            $genre->toArray()
-        );
+        return response()->json($this->genre);
     }
 
     /**
@@ -88,9 +95,8 @@ class GeneroController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $genre = Genre::find($id);
-        $genre->fill($request->all());
-        $genre->save();
+        $this->genre->fill($request->all());
+        $this->genre->save();
 
         return response()->json([
             "mensaje" => "cambios asentados"
@@ -103,8 +109,9 @@ class GeneroController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        $this->genre->delete();
+        return response()->json(["mensaje" => "Elemento eliminado"]);
     }
 }
