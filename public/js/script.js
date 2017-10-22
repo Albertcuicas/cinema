@@ -11,6 +11,11 @@ $("#registro").click( function () {
 		data:{genre: dato},
 		success:function(){
 			$("#msj-success").fadeIn();
+		},
+		error:function(msj){
+			$("#msj").html(msj.responseJSON.genre);
+			$("#msj-error").fadeIn();
+
 		}
 	});
 });
