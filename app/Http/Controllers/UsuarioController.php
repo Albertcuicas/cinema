@@ -28,9 +28,12 @@ class UsuarioController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
 		$users =  User::paginate(5);
+		if ($request->ajax()) {
+			return response()->json(view('usuario.users',compact('users'))->render());
+		}
 		return view('usuario.index',compact('users'));
 	}
 
