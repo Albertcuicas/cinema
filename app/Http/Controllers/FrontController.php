@@ -2,7 +2,7 @@
 
 use Cinema\Http\Requests;
 use Cinema\Http\Controllers\Controller;
-
+use Cinema\Movie;
 use Illuminate\Http\Request;
 
 class FrontController extends Controller {
@@ -28,9 +28,10 @@ class FrontController extends Controller {
 
 	public function reviews()
 	{
-		return view('reviews');
+        $movies = Movie::Movies();
+		return view('reviews', compact('movies'));
 	}
 	public function admin(){
-	     return view('admin.index');
+	    return view('admin.index');
 	}
 }
