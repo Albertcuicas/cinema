@@ -7,9 +7,24 @@ use Cinema\Genre;
 use Cinema\Movie;
 use Cinema\Http\Requests;
 use Cinema\Http\Controllers\Controller;
+use Session;
+use Redirect;
+use Illuminate\Routing\Route;
 
 class MovieController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('admin');
+        $this->beforeFilter('@find',['only' => ['edit','update','destroy']]);
+    }
+
+    public function find(Route $route)
+    {
+        $this->movie = Movie::find($route->getParameter('pelicula'));
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -41,7 +56,8 @@ class MovieController extends Controller
     public function store(Request $request)
     {
         Movie::create($request->all());
-        return "listo";
+        Session::flash('message','Pelicula Creada Correctamente');
+        return Redirect::to('/pelicula');
     }
 
     /**
@@ -63,7 +79,8 @@ class MovieController extends Controller
      */
     public function edit($id)
     {
-        //
+        $genres = Genre::lists('genre', 'id');
+        return view('pelicula.edit', ['movie'=>$this->movie, 'genres'=>$genres]);
     }
 
     /**
@@ -73,9 +90,12 @@ class MovieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $this->movie->fill($request->all());
+        $this->movie->save();
+        Session::flash('message','Pelicula Editada Correctamente');
+        return Redirect::to('/pelicula');
     }
 
     /**
@@ -86,6 +106,9 @@ class MovieController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->movie->delete();
+        \Storage::delete($this->movie->path);
+        Session::flash('message','Pelicula Eliminada Correctamente');
+        return Redirect::to('/pelicula');
     }
 }
